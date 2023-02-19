@@ -22,17 +22,6 @@ client = client = UtilBot(intents = discord.Intents.all())
 
 
 ###_VARIABLES ------------------------------------------------------
-<<<<<<< Updated upstream
-guild_id = int(os.getenv("GUILD")) #ChaotenWG                                          1001945324258066462 #mein Server
-
-member_role_id = int(os.getenv("BIGBRAINTME")) #ChaotenWG                                       1033151070333063269 #auf meinen Server
-abwesend_role_id = int(os.getenv("ABWESENDROLLE")) #ChaotenWG                                 1070791409990369351 #auf meinem Server
-trashtracker_role_id = int(os.getenv("TRASHTRACKER"))  #CWG
-
-haushalt_channel_id = int(os.getenv("HAUSHALT")) #CWG
-input_channel_id = int(os.getenv("INPUT")) # 1033144495065284678 #zu "kalender_eintrag"-channel ID umändern
-output_channel_id = int(os.getenv("OUTPUT")) # 1033144495065284678 #zu "kalender_ausgang"-channel ID umändern
-=======
 guild_id = int(os.getenv("JASBOT_GUILD"))
 
 member_role_id = int(os.getenv("JASBOT_BIGBRAINTME"))
@@ -42,7 +31,7 @@ trashtracker_role_id = int(os.getenv("JASBOT_TRASHTRACKER"))
 haushalt_channel_id = int(os.getenv("JASBOT_HAUSHALT"))
 input_channel_id = int(os.getenv("JASBOT_INPUT"))
 output_channel_id = int(os.getenv("JASBOT_OUTPUT"))
->>>>>>> Stashed changes
+
 
 kalender_name = os.getenv("JASBOT_DBNAME")
 
