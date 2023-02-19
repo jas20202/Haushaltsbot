@@ -22,6 +22,7 @@ client = client = UtilBot(intents = discord.Intents.all())
 
 
 ###_VARIABLES ------------------------------------------------------
+<<<<<<< Updated upstream
 guild_id = int(os.getenv("GUILD")) #ChaotenWG                                          1001945324258066462 #mein Server
 
 member_role_id = int(os.getenv("BIGBRAINTME")) #ChaotenWG                                       1033151070333063269 #auf meinen Server
@@ -31,8 +32,19 @@ trashtracker_role_id = int(os.getenv("TRASHTRACKER"))  #CWG
 haushalt_channel_id = int(os.getenv("HAUSHALT")) #CWG
 input_channel_id = int(os.getenv("INPUT")) # 1033144495065284678 #zu "kalender_eintrag"-channel ID umändern
 output_channel_id = int(os.getenv("OUTPUT")) # 1033144495065284678 #zu "kalender_ausgang"-channel ID umändern
+=======
+guild_id = int(os.getenv("JASBOT_GUILD"))
 
-kalender_name = os.getenv("DBNAME")
+member_role_id = int(os.getenv("JASBOT_BIGBRAINTME"))
+abwesend_role_id = int(os.getenv("JASBOT_ABWESENDROLLE"))
+trashtracker_role_id = int(os.getenv("JASBOT_TRASHTRACKER"))
+
+haushalt_channel_id = int(os.getenv("JASBOT_HAUSHALT"))
+input_channel_id = int(os.getenv("JASBOT_INPUT"))
+output_channel_id = int(os.getenv("JASBOT_OUTPUT"))
+>>>>>>> Stashed changes
+
+kalender_name = os.getenv("JASBOT_DBNAME")
 
 data = []
 WHEN = time(9, 0, 0)
@@ -52,7 +64,7 @@ tasks = ["Küche", "Bad", "WCs", "Boden"]
 # con.close()
 @client.tree.command(name = "jasdebug", description="Debug Command for Jas")
 async def jasdebug(interact: Interaction, todo: str, debugdate: str):
-    if(interact.user.id == int(os.getenv("JASID"))):
+    if(interact.user.id == int(os.getenv("JASBOT_JASID"))):
         if todo == "clear":
             await clearkalender(interact.response)
             return
@@ -629,4 +641,4 @@ async def on_ready():
     await background_task()
 
 if __name__ == '__main__':
-    client.run(os.getenv("TOKEN"))
+    client.run(os.getenv("JASBOT_TOKEN"))
