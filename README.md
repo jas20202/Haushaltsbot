@@ -56,7 +56,7 @@ Fehlermeldung auch bei falschen Eingaben.
 
 *Return:*
 >Erfolgsmeldung beim erfolgreichen Schreiben in die Datenbank. Andernfalls eine Fehlermeldung.\
-Fehlermeldung auch bei falschen Eingaben.
+Fehlermeldung auch bei falschen Eingaben. 
 
 ### Repeated_Events
 *Parameter:*
