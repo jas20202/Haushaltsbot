@@ -22,20 +22,22 @@ client = client = UtilBot(intents = discord.Intents.all())
 
 
 ###_VARIABLES ------------------------------------------------------
-guild_id = int(os.getenv("GUILD"))
+guild_id = int(os.getenv("JASBOT_GUILD"))
 
-member_role_id = int(os.getenv("BIGBRAINTME"))
-abwesend_role_id = int(os.getenv("ABWESENDROLLE"))
-trashtracker_role_id = int(os.getenv("TRASHTRACKER"))
+member_role_id = int(os.getenv("JASBOT_BIGBRAINTME"))
+abwesend_role_id = int(os.getenv("JASBOT_ABWESENDROLLE"))
+trashtracker_role_id = int(os.getenv("JASBOT_TRASHTRACKER"))
 
-haushalt_channel_id = int(os.getenv("HAUSHALT"))
-input_channel_id = int(os.getenv("INPUT"))
-output_channel_id = int(os.getenv("OUTPUT"))
+haushalt_channel_id = int(os.getenv("JASBOT_HAUSHALT"))
+input_channel_id = int(os.getenv("JASBOT_INPUT"))
+output_channel_id = int(os.getenv("JASBOT_OUTPUT"))
 
-kalender_name = os.getenv("DBNAME")
+
+
+kalender_name = os.getenv("JASBOT_DBNAME")
 
 data = []
-WHEN = time(9, 0, 0)
+WHEN = time(6, 0, 0)
 line = "----------\n"
 date_regex = r"^((?:(?:0[1-9]|[12][0-9]|3[01]|[1-9])\.(?:0[1-9]|1[012]|[1-9])\.(?:20)?\d\d)|heute|morgen)$"
 datum_liegt_in_der_vergangenheit = ":question: Dein Datum liegt in der Vergangenheit. Leider kann ich nicht zeireisen :pleading_face:"
@@ -52,7 +54,7 @@ tasks = ["Küche", "Bad", "WCs", "Boden"]
 # con.close()
 @client.tree.command(name = "jasdebug", description="Debug Command for Jas")
 async def jasdebug(interact: Interaction, todo: str, debugdate: str):
-    if(interact.user.id == int(os.getenv("JASID"))):
+    if(interact.user.id == int(os.getenv("JASBOT_JASID"))):
         if todo == "clear":
             await clearkalender(interact.response)
             return
@@ -629,4 +631,4 @@ async def on_ready():
     await background_task()
 
 if __name__ == '__main__':
-    client.run(os.getenv("TOKEN"))
+    client.run(os.getenv("JASBOT_TOKEN"))
