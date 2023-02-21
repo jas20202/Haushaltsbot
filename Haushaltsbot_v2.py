@@ -33,6 +33,7 @@ input_channel_id = int(os.getenv("JASBOT_INPUT"))
 output_channel_id = int(os.getenv("JASBOT_OUTPUT"))
 
 
+
 kalender_name = os.getenv("JASBOT_DBNAME")
 
 data = []
