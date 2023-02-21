@@ -36,7 +36,7 @@ output_channel_id = int(os.getenv("JASBOT_OUTPUT"))
 kalender_name = os.getenv("JASBOT_DBNAME")
 
 data = []
-WHEN = time(9, 0, 0)
+WHEN = time(6, 0, 0)
 line = "----------\n"
 date_regex = r"^((?:(?:0[1-9]|[12][0-9]|3[01]|[1-9])\.(?:0[1-9]|1[012]|[1-9])\.(?:20)?\d\d)|heute|morgen)$"
 datum_liegt_in_der_vergangenheit = ":question: Dein Datum liegt in der Vergangenheit. Leider kann ich nicht zeireisen :pleading_face:"

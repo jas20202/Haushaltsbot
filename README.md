@@ -142,8 +142,6 @@ Fehlermeldung auch bei falschen Eingaben.
 *Return:*
 >Die Wochenübersicht als Nachricht.
 
-
-
 ### Pet
 >Hiermit kannst du dem Bot etwas zuneigung zeigen.
 
