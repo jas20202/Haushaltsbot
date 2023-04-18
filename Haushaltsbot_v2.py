@@ -90,7 +90,7 @@ async def showall(channel):
     await channel.send_message(res)
 
 async def currenttime(channel):
-    await channel.send_message(f"{datetime.today()}\nactive at: {str(WHEN)}")
+    await channel.send_message(f"{datetime.now()}\nactive at: {str(WHEN)}")
 
 
 ###_BOT_COMMANDS ---------------------------------------------------
@@ -107,7 +107,7 @@ async def task_help(interact: Interaction, task: str):
         await interact.response.send_message(":fork_and_knife: Der **Küchen Task** beinhaltet folgende Aufgaben:\n\n> :white_small_square: Alle Ablagen (auch unter den Geräten) wischen\n> :white_small_square: Wandfließen wischen (vor allem beim Herd)\n> :white_small_square: Überprüfen ob Herd, Ofen und Mikrowelle sauber (ggfs. putzen)\n> :white_small_square: Kaffeemaschine entkalken\n> :white_small_square: Wasserkocher entkalken\n> :white_small_square: Spülbecken mit Essigessenz behandeln (fürs Kellerrohr)\n> Für die Letzten drei Punkte findest du Informationen in #regeln-und-infos uwu")
     elif task == "bad":
         await interact.response.send_message(":bathtub: Der **Bad Task** beinhaltet folgende Aufgaben:\n\n> :white_small_square: Dusche, Badewanne & Waschbecken 1.OG putzen\n> :white_small_square: Dusche im Keller putzen")
-    elif task == "wcs" or task == "wc":
+    elif task in {"wcs", "wc"}:
         await interact.response.send_message(":toilet: Der **WC Task** beinhaltet folgende Aufgaben:\n\n> :white_small_square: WC im DG, 1.OG sowie EG putzen (Keller nach bedarf)\n> :white_small_square: Überprüfen ob Wasser noch blau ist, wenn nein dann Jas bescheid geben\n> :white_small_square: Die Waschbecken im DG, EG sowie Keller putzen ")
     elif task == "boden":
         await interact.response.send_message(":broom: Der **Boden Task** beinhaltet folgende Aufgaben:\n\n> :white_small_square: Alle Treppen, Flur 1. OG, komplettes EG, sowie Keller saugen\n> :white_small_square: Alle oben genannten Orte nass wischen (muss nicht unbedingt jede Woche sein)\n> Wer freundlich sein will, kann die anderen Mitbewohner fragen, ob diese ihr Zimmer gesaugt haben möchten uwu\n> Diese müssen dann ihr Boden für dich frei machen ^^\n")
@@ -123,8 +123,13 @@ async def task_help(interact: Interaction, task: str):
 @client.tree.command(name = "pet", description="Appreciation für den Haushaltsbot uwu")
 async def pet(interact: Interaction):
     user = interact.user
-    await interact.response.send_message("Quack quack quack, danke für's streicheln " + user.mention + " ^^\n"
-    +"Ich geb mein bestest! Quack :duck::soap:")
+    await interact.response.send_message(
+        (
+            f"Quack quack quack, danke für's streicheln {user.mention}"
+            + " ^^\n"
+            + "Ich geb mein bestest! Quack :duck::soap:"
+        )
+    )
 
 #-#-#
 
@@ -171,14 +176,14 @@ async def multiple_events(interact: Interaction, datum: str, eventnames: str, ev
     _match = re.search(r"^(?:([\w\d\s.:,\-_+*~#'´`<>()=\][}{&%$\^€\"\"\|!?äöü]+);?)+$", eventnames)
     if _match is None:
         await interact.response.send_message(":x: Bitte nutze ';' als Trennzeichen.")
-    names_arr = _match.group(0).split(";")
+    names_arr = _match[0].split(";")
 
     _match = re.search(r"^(?:([\w\d\s.:,\-_+*~#'´`<>()=\][}{&%$\^€\"\"\|!?äöü]+);?)+$", eventinfos)
     if _match is None:
         await interact.response.send_message(":x: Bitte nutze ';' als Trennzeichen.")
-    infos_arr = _match.group(0).split(";")
+    infos_arr = _match[0].split(";")
 
-    if not len(names_arr) == len(infos_arr):
+    if len(names_arr) != len(infos_arr):
         await interact.response.send_message(":x: Die Anzahl an Eventnamen und Eventinformationen stimmen nicht überein.")
 
     for i in range(len(names_arr)):
@@ -192,8 +197,8 @@ async def repeated_events(interact: Interaction, eventname: str, eventinfo: str,
     _match = re.search(r"^((?:(?:0[1-9]|[12][0-9]|3[01]|[1-9])\.(?:0[1-9]|1[012]|[1-9])\.(?:20)?\d\d\s?)+)$", dates)
     if _match is None:
         await interact.response.send_message(ungueltiges("Eines der Daten"))
-    
-    dates = _match.group(0).split()
+
+    dates = _match[0].split()
     global data
     data = []
 
@@ -215,7 +220,7 @@ async def eventserie(interact: Interaction, datum: str, eventname: str, eventinf
     entrydate = parse_str_to_ISO_date(datum)
     if entrydate < date.today():
         await interact.response.send_message(datum_liegt_in_der_vergangenheit)
-    
+
     _match = re.search(r"^(0?[1-9]+)([dwmy])$", abstand)
     if _match is None:
         await interact.response.send_message(f":x: Bitte gebe für den Parameter `**abstand**` eine Zahl gefolgt von entweder d, w, m oder y ein.\nd = tage, w = wochen, m = monate, y = jahre.") 
@@ -223,7 +228,12 @@ async def eventserie(interact: Interaction, datum: str, eventname: str, eventinf
     global data
     data = []
     for i in range(anz_wdh):
-        new_entry(add_space(entrydate, int(_match.group(1)), _match.group(2), i), eventname, eventinfo, interact.user.name)
+        new_entry(
+            add_space(entrydate, int(_match[1]), _match[2], i),
+            eventname,
+            eventinfo,
+            interact.user.name,
+        )
     await interact.response.send_message(insert_into_db(data))
 
 #-#-#
@@ -279,8 +289,8 @@ async def wochen_uebersicht(interact: Interaction, kalenderwoche: str):
     _match = re.search(r"^((?:(?:[1-4]?[0-9]?)|(?:5[0-2]?))|diese|nächste)$", kalenderwoche)
     if _match is None:
         await interact.response.send_message(":x: Das ist leider keine gültige Kalenderwoche qwq")
-    
-    week = parse_week_to_ISO(_match.group(1))
+
+    week = parse_week_to_ISO(_match[1])
     entries = get_entries_of("week", week, date.today().year)
     await interact.response.send_message(create_message_for_entries(entries, f"KW {week}"))
 
@@ -303,33 +313,29 @@ async def delete_events(interact: Interaction, ids: str):
     _match = re.search(r"^(\d+)(?:(?:-)(\d+))|(?:(\d+)\s?)+$", ids)
     if _match is None:
         await interact.response.send_message(":x: Bitte gebe eine oder meherere gültige IDs ein. Eingaben werden in der Form `x` `x y z` und `x-z` akzeptiert.")
-    
+
     _match = re.search(r"^(\d+)$", ids)
     if _match is not None:
-        id = int(_match.group(1))
-        await interact.response.send_message(":scissors: " + delete_from_db(id))
+        _id = int(_match[1])
+        await interact.response.send_message(f":scissors: {delete_from_db(_id)}")
         return
-    
+
     _match = re.search(r"^(?:(\d+)\s?)+$", ids)
     if _match is not None:
-        response = ""
         ids_arr = ids.split(" ")
-        for id in ids_arr:
-            response += delete_from_db(int(id))
-        await interact.response.send_message(":scissors: " + response)
+        response = "".join(delete_from_db(int(_id)) for _id in ids_arr)
+        await interact.response.send_message(f":scissors: {response}")
         return
-    
+
     _match = re.search(r"^(\d+)(?:(?:-)(\d+))$", ids)
     if _match is not None:
-        response = ""
-        start = int(_match.group(1))
-        end = int(_match.group(2))+1
+        start = int(_match[1])
+        end = int(_match[2]) + 1
 
-        for id in range(start, end):
-            response += delete_from_db(int(id))
-        await interact.response.send_message(":scissors: " + response)
+        response = "".join(delete_from_db(int(id)) for id in range(start, end))
+        await interact.response.send_message(f":scissors: {response}")
         return
-    
+
     await interact.response.send_message("Idk how we got here")
     
 
@@ -346,15 +352,14 @@ def insert_into_db(data):
         con.commit()
 
         res = cursor.execute("SELECT rowid, date, name, info FROM event ORDER BY rowid DESC").fetchmany(len(data))
-        
+
         if len(res) < 10:
-            new_entries = ""
-            for entry in res:
-                new_entries += f"> **ID:** `{entry[0]}` {parse_date_to_human(entry[1])} {entry[2]} - *{entry[3]}*\n"
+            new_entries = "".join(
+                f"> **ID:** `{entry[0]}` {parse_date_to_human(entry[1])} {entry[2]} - *{entry[3]}*\n"
+                for entry in res
+            )
         else:
-            ids_arr = []
-            for entry in res:
-                ids_arr.append(entry[0])
+            ids_arr = [entry[0] for entry in res]
             ids_arr.sort()
             new_entries = f"IDs der neuen Einträge: `{ids_arr}`"
 
@@ -364,15 +369,15 @@ def insert_into_db(data):
     con.close()
     return rtr
     
-def delete_from_db(id: int):
+def delete_from_db(_id: int):
     con = sqlite3.connect(kalender_name)
     cursor = con.cursor()
     try:
-        cursor.execute(f"DELETE FROM event WHERE rowid={id}")
+        cursor.execute(f"DELETE FROM event WHERE rowid={_id}")
         con.commit()
-        rtr = f"Eintrag mit der ID `{id}` gelöscht\n"
-    except:
-        rtr = f":x: Löschen vom Eintrag der ID `{id}` fehlgeschlagen qwq\n"
+        rtr = f"Eintrag mit der ID `{_id}` gelöscht\n"
+    except Exception:
+        rtr = f":x: Löschen vom Eintrag der ID `{_id}` fehlgeschlagen qwq\n"
     con.close()
     return rtr
 
@@ -444,7 +449,9 @@ async def neue_zuteilung(channel, today: date):
 
     home_members.clear()
 
-    await channel.send(f"_**Die neue Zuteilung lautet:**_ \nDiese ist gültig bis zum `{enddate.day}.{enddate.month}.{enddate.year}`\n" + zuteilung)
+    await channel.send(
+        f"_**Die neue Zuteilung lautet:**_ \nDiese ist gültig bis zum `{enddate.day}.{enddate.month}.{enddate.year}`\n{zuteilung}"
+    )
 
 def checkmembers(guild):   
     global home_members
@@ -458,7 +465,7 @@ def zuteilen():
     for member in home_members:
         if client.get_guild(guild_id).get_role(abwesend_role_id) in member.roles:
             zuteilung += ":island:"
-        zuteilung += member.mention + " --> " + tasks[i] + "\n"
+        zuteilung += f"{member.mention} --> {tasks[i]}" + "\n"
         i += 1
         if i == len(tasks):
             break
@@ -478,7 +485,7 @@ async def muelldienst(guild):
     await newTrashCollector.add_roles(trackerRole)
 
     zuteilung += "--------------------------\n"
-    zuteilung += newTrashCollector.mention + " --> Müll rausbringen"
+    zuteilung += f"{newTrashCollector.mention} --> Müll rausbringen"
 
 
 ###_HELPER_FUNCTIONS_KALENDER -----------------------------------------------
@@ -504,9 +511,7 @@ def parse_date_to_human(input: date):
 def parse_week_to_ISO(input):
     if input == "diese":
         return date.today().isocalendar()[1]
-    if input == "nächste":
-        return date.today().isocalendar()[1] + 1
-    return int(input)
+    return date.today().isocalendar()[1] + 1 if input == "nächste" else int(input)
 
 def add_space(entrydate: date, space: int, spaceinfo: str, repeat: int):
     nextday = entrydate
@@ -545,10 +550,10 @@ def next_Putztag(today: date):
     +f"Ausweichtermin ist am {day2}.{today.month}.{today.year} uwu\n{line}")
     
 def birthday_message(bdays):
-    message = ""
-    for bday in bdays:
-        message += f"{line}:birthday: :tada: Quackers, Happy Birthday {bday[0]}!!!\n{line}"
-    return message
+    return "".join(
+        f"{line}:birthday: :tada: Quackers, Happy Birthday {bday[0]}!!!\n{line}"
+        for bday in bdays
+    )
 
 def create_message_for_entries(entries, scope):
     message = f"{line}:sunny: Guten morgen liebe WG-Menschies, Quack!\n\n"
@@ -556,12 +561,11 @@ def create_message_for_entries(entries, scope):
         message += f"**Termine {scope}:**\n"
         length = 0
         for entry in entries:
-            if length < len(entry[1]):
-                length = len(entry[1])
+            length = max(length, len(entry[1]))
         for entry in entries:
             filler = ""
             if length > len(entry[1]):
-                for i in range(length - len(entry[1]) + 1):
+                for _ in range(length - len(entry[1]) + 1):
                     filler += " "
             message += f"`{parse_date_to_human(entry[0])}` {entry[1]}{filler} - *{entry[2]}*\n"
     else:
@@ -590,33 +594,28 @@ async def background_task():
 async def called_once_a_day(channel: discord.TextChannel, today: date):
     await client.wait_until_ready()
     thisyear = today.year
-    #überprüft ob leute als abwesend eingetragen sind
     await check_abwesenheit(today)
-    #if erster Tag des monats? -> Wann nächster Gemeinschaftsputztag
     if today.day == 1:
         message = next_Putztag(today)
         entries = get_entries_of("month", today.month, thisyear)
         await channel.send(create_message_for_entries(entries, "diesen Monat"))
         await channel.send(message)
-    #if Montag -> Termine der woche & alte termine löschen
     elif today.isoweekday() == 1:
         thisweek = today.isocalendar()[1]
         if thisweek % 2 == 0:
             await neue_zuteilung(client.get_channel(haushalt_channel_id), today)
 
         entries = get_entries_of("week", thisweek, thisyear)
-        await channel.send(create_message_for_entries(entries, f"diese Woche (KW {thisweek})")+f"\nIch wünsche euch einen angenehmen Start in die Woche :duck:\n{line}")
+        await channel.send(
+            f'{create_message_for_entries(entries, f"diese Woche (KW {thisweek})")}\nIch wünsche euch einen angenehmen Start in die Woche :duck:\n{line}'
+        )
         delete_older_then(thisweek, thisyear)
     else:
         entries = get_entries_of("date", today, thisyear)
         await channel.send(create_message_for_entries(entries, "heute"))
-    #if altpapier in 1 woche -> bescheidgeben
-    #if altpapier am nächsten Tag -> erinnern
     await check_altpapier(channel, today)
-    #if Freitag -> Blumengießen
     if today.isoweekday() == 5:
         await channel.send(f"{line}:potted_plant: :cup_with_straw: Bitte denk daran die lieben Pflanzen zu gießen uwu\n{line}")
-    #if bday -> Gratulieren
     bdays = someone_has_bday(today)
     if len(bdays) > 0:
         message = birthday_message(bdays)
