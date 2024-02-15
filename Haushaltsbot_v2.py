@@ -44,7 +44,7 @@ datum_liegt_in_der_vergangenheit = ":question: Dein Datum liegt in der Vergangen
 
 home_members = []
 zuteilung = ""
-tasks = ["Küche", "Bad", "WCs", "Boden"]
+tasks = ["Küche", "Bad", "WCs", "Boden", "Müll rausbringen"]
 
 ###_DEBUGGING ------------------------------------------------------
 #create new database
@@ -134,7 +134,7 @@ async def zuteilung(interact: Interaction):
     global zuteilung
     zuteilung = zuteilen()
     
-    await muelldienst(interact.guild)
+    # await muelldienst(interact.guild)
 
     home_members.clear()
 
