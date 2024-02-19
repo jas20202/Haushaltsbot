@@ -440,7 +440,7 @@ async def neue_zuteilung(channel, today: date):
     checkmembers(guild)
     global zuteilung
     zuteilung = zuteilen()
-    await muelldienst(guild)
+    # await muelldienst(guild)
 
     home_members.clear()
 
