@@ -11,6 +11,7 @@ from datetime import date, time, datetime, timedelta
 
 load_dotenv()
 
+### -------- v.2.4. ------------------------------------------------
 class UtilBot(Client):
     def __init__(self, *, intents: Intents):
         super().__init__(intents=intents)
@@ -31,8 +32,9 @@ trashtracker_role_id = int(os.getenv("JASBOT_TRASHTRACKER"))
 haushalt_channel_id = int(os.getenv("JASBOT_HAUSHALT"))
 input_channel_id = int(os.getenv("JASBOT_INPUT"))
 output_channel_id = int(os.getenv("JASBOT_OUTPUT"))
+debug_channel_id = int(os.getenv("JASBOT_DEBUG"))
 
-
+isRunning = False
 
 kalender_name = os.getenv("JASBOT_DBNAME")
 
@@ -571,6 +573,9 @@ def create_message_for_entries(entries, scope):
 
 ###_DAILY_ROUTINE_BACKGROUND --------------------------------------
 async def background_task():
+    if(isRunning): 
+        return
+    isRunning = True
     now = datetime.now()
     if now.time() > WHEN:
         tomorrow = datetime.combine(now.date() + timedelta(days=1), time(0))
@@ -627,7 +632,7 @@ async def called_once_a_day(channel: discord.TextChannel, today: date):
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Game("Aufräumen"), status=discord.Status.online)
-    await client.get_channel(input_channel_id).send(":duck: Quack, Quack, Ich stehe euch zu Diensten :wave:")
+    await client.get_channel(debug_channel_id).send(":duck: Quack, Quack, Ich stehe euch zu Diensten :wave:")
     await background_task()
 
 if __name__ == '__main__':
