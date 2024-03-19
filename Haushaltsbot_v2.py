@@ -34,8 +34,6 @@ input_channel_id = int(os.getenv("JASBOT_INPUT"))
 output_channel_id = int(os.getenv("JASBOT_OUTPUT"))
 debug_channel_id = int(os.getenv("JASBOT_DEBUG"))
 
-isRunning = False
-
 kalender_name = os.getenv("JASBOT_DBNAME")
 
 data = []
@@ -633,6 +631,7 @@ async def called_once_a_day(channel: discord.TextChannel, today: date):
 async def on_ready():
     await client.change_presence(activity=discord.Game("Aufräumen"), status=discord.Status.online)
     await client.get_channel(debug_channel_id).send(":duck: Quack, Quack, Ich stehe euch zu Diensten :wave:")
+    isRunning = False
     await background_task()
 
 if __name__ == '__main__':
