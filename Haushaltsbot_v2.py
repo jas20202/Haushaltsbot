@@ -571,6 +571,7 @@ def create_message_for_entries(entries, scope):
 
 ###_DAILY_ROUTINE_BACKGROUND --------------------------------------
 async def background_task():
+    global isRunning
     if(isRunning): 
         return
     isRunning = True
@@ -631,6 +632,7 @@ async def called_once_a_day(channel: discord.TextChannel, today: date):
 async def on_ready():
     await client.change_presence(activity=discord.Game("Aufräumen"), status=discord.Status.online)
     await client.get_channel(debug_channel_id).send(":duck: Quack, Quack, Ich stehe euch zu Diensten :wave:")
+    global isRunning
     isRunning = False
     await background_task()
 
