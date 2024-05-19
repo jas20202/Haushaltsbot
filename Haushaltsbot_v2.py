@@ -44,7 +44,7 @@ datum_liegt_in_der_vergangenheit = ":question: Dein Datum liegt in der Vergangen
 
 home_members = []
 zuteilung = ""
-tasks = ["Küche", "Bad", "WCs", "Boden", "Müll rausbringen"]
+tasks = ["Küche", "Bad", "WCs", "Boden"]
 
 ###_DEBUGGING ------------------------------------------------------
 #create new database
@@ -469,17 +469,25 @@ async def muelldienst(guild):
     trackerRole = guild.get_role(trashtracker_role_id)
 
     lastTrashCollector = trackerRole.members[0]
-    await lastTrashCollector.remove_roles(trackerRole)
-    i = home_members.index(lastTrashCollector) + 1
-    if i >= len(home_members):
-        i = 0
+    i = home_members.index(lastTrashCollector)
+    iterator = 0
 
-    newTrashCollector = home_members[i]
-    await newTrashCollector.add_roles(trackerRole)
-
+    while(iterator < len(home_members)): 
+        iterator = iterator + 1
+        i = i + 1
+        if i >= len(home_members):
+            i = 0
+        newTrashCollector = home_members[i]
+        if(client.get_guild(guild_id).get_role(abwesend_role_id) in newTrashCollector.roles): 
+            continue
+        else: 
+            await lastTrashCollector.remove_roles(trackerRole)
+            await newTrashCollector.add_roles(trackerRole)
+            zuteilung += "--------------------------\n"
+            zuteilung += newTrashCollector.mention + " --> Müll rausbringen"
+            return
     zuteilung += "--------------------------\n"
-    zuteilung += newTrashCollector.mention + " --> Müll rausbringen"
-
+    zuteilung += "Kein Mülldienst bestimmbar :island:"
 
 ###_HELPER_FUNCTIONS_KALENDER -----------------------------------------------
 def ungueltiges(datum: str):
