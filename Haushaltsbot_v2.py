@@ -639,7 +639,7 @@ async def called_once_a_day(channel: discord.TextChannel, today: date):
 ###_BOT_START -----------------------------------------------------
 @client.event
 async def on_ready():
-    commit = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'])
+    commit = subprocess.check_output(['git', '-C', 'discord/bots/Haushaltsbot', 'rev-parse', '--short', 'HEAD'])
 
     await client.change_presence(activity=discord.Game("Aufräumen"), status=discord.Status.online)
     await client.get_channel(debug_channel_id).send(f":duck: Quack, Quack, Ich stehe euch zu Diensten :wave: \nLast commit: {commit}")
