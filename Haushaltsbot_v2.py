@@ -456,13 +456,17 @@ def zuteilen():
     zuteilung = ""
     random.shuffle(tasks)
     i = 0
+    extra_members = []
     for member in home_members:
+        if client.get_guild(guild_id).get_role(trashtracker_role_id) not in member.roles:
+            extra_members.append(member.mention)
         if client.get_guild(guild_id).get_role(abwesend_role_id) in member.roles:
             zuteilung += ":island:"
         zuteilung += member.mention + " --> " + tasks[i] + "\n"
         i += 1
         if i == len(tasks):
             break
+    zuteilung += " & ".join(extra_members) + " --> " + tasks[i] + "\n"
     return zuteilung
 
 async def muelldienst(guild):    
