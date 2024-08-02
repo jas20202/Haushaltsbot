@@ -133,9 +133,7 @@ async def pet(interact: Interaction):
 async def zuteilung(interact: Interaction):
     checkmembers(interact.guild)
     global zuteilung
-    zuteilung = zuteilen()
-    
-    await muelldienst(interact.guild)
+    zuteilung = await zuteilen(interact.guild)
 
     home_members.clear()
 
@@ -462,15 +460,14 @@ async def zuteilen(guild):
         i += 1
         if i == len(tasks):
             break
-    await muelldienst(guild)
+    await muelldienst(zuteilung, guild)
     for member in home_members:
         if client.get_guild(guild_id).get_role(trashtracker_role_id) not in member.roles:
             extra_members.append(member.mention)
     zuteilung += " & ".join(extra_members) + " --> " + tasks[i] + "\n"
     return zuteilung
 
-async def muelldienst(guild):    
-    global zuteilung
+async def muelldienst(zuteilung, guild):    
     trackerRole = guild.get_role(trashtracker_role_id)
 
     lastTrashCollector = trackerRole.members[0]
