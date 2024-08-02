@@ -460,7 +460,7 @@ async def zuteilen(guild):
         i += 1
         if i == len(tasks):
             break
-    await muelldienst(zuteilung, guild)
+    zuteilung += await muelldienst(zuteilung, guild)
     for member in home_members:
         if client.get_guild(guild_id).get_role(trashtracker_role_id) not in member.roles:
             extra_members.append(member.mention)
@@ -487,9 +487,10 @@ async def muelldienst(zuteilung, guild):
             await newTrashCollector.add_roles(trackerRole)
             zuteilung += "--------------------------\n"
             zuteilung += newTrashCollector.mention + " --> Müll rausbringen"
-            return
+            return zuteilung
     zuteilung += "--------------------------\n"
     zuteilung += "Kein Mülldienst bestimmbar :island:"
+    return zuteilung
 
 ###_HELPER_FUNCTIONS_KALENDER -----------------------------------------------
 def ungueltiges(datum: str):
