@@ -440,9 +440,7 @@ async def neue_zuteilung(channel, today: date):
 
     checkmembers(guild)
     global zuteilung
-    zuteilung = zuteilen()
-    await muelldienst(guild)
-
+    zuteilung = await zuteilen(guild)
     home_members.clear()
 
     await channel.send(f"_**Die neue Zuteilung lautet:**_ \nDiese ist gültig bis zum `{enddate.day}.{enddate.month}.{enddate.year}`\n" + zuteilung)
@@ -452,20 +450,22 @@ def checkmembers(guild):
     role = guild.get_role(member_role_id)
     home_members = role.members
 
-def zuteilen():
+async def zuteilen(guild):
     zuteilung = ""
     random.shuffle(tasks)
     i = 0
     extra_members = []
     for member in home_members:
-        if client.get_guild(guild_id).get_role(trashtracker_role_id) not in member.roles:
-            extra_members.append(member.mention)
         if client.get_guild(guild_id).get_role(abwesend_role_id) in member.roles:
             zuteilung += ":island:"
         zuteilung += member.mention + " --> " + tasks[i] + "\n"
         i += 1
         if i == len(tasks):
             break
+    await muelldienst(guild)
+    for member in home_members:
+        if client.get_guild(guild_id).get_role(trashtracker_role_id) not in member.roles:
+            extra_members.append(member.mention)
     zuteilung += " & ".join(extra_members) + " --> " + tasks[i] + "\n"
     return zuteilung
 
