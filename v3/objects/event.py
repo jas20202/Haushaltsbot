@@ -1,8 +1,6 @@
-import uuid 
-
 class Event:
-    def __init__(self, date, event_name, event_info, author, entry_date):
-        self.id = uuid.uuid1()
+    def __init__(self, id, date, event_name, event_info, author, entry_date):
+        self.id = id
         self.date = date
         self.event_name = event_name
         self.event_info = event_info
