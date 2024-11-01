@@ -109,7 +109,7 @@ async def task_help(interact: Interaction, task: str):
     elif task == "bad":
         await interact.response.send_message(":bathtub: Der **Bad Task** beinhaltet folgende Aufgaben:\n\n> :white_small_square: Dusche, Badewanne & Waschbecken 1.OG putzen\n> :white_small_square: Dusche im Keller putzen")
     elif task == "wcs" or task == "wc":
-        await interact.response.send_message(":toilet: Der **WC Task** beinhaltet folgende Aufgaben:\n\n> :white_small_square: WC im DG, 1.OG sowie EG putzen (Keller nach bedarf)\n> :white_small_square: Überprüfen ob Wasser noch blau ist, wenn nein dann Jas bescheid geben\n> :white_small_square: Die Waschbecken im DG, EG sowie Keller putzen ")
+        await interact.response.send_message(":toilet: Der **WC Task** beinhaltet folgende Aufgaben:\n\n> :white_small_square: WC im DG, 1.OG sowie EG putzen (Keller nach bedarf)\n> :white_small_square: Überprüfen ob Wasser noch blau ist, wenn nein dann Jas bescheid geben\n> :white_small_square: Die Waschbecken im DG, EG sowie Keller putzen")
     elif task == "boden":
         await interact.response.send_message(":broom: Der **Boden Task** beinhaltet folgende Aufgaben:\n\n> :white_small_square: Alle Treppen, Flur 1. OG, komplettes EG, sowie Keller saugen\n> :white_small_square: Alle oben genannten Orte nass wischen (muss nicht unbedingt jede Woche sein)\n> Wer freundlich sein will, kann die anderen Mitbewohner fragen, ob diese ihr Zimmer gesaugt haben möchten uwu\n> Diese müssen dann ihr Boden für dich frei machen ^^\n")
     elif task == "müll":
