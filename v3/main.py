@@ -53,7 +53,7 @@ client = client = UtilBot(intents = discord.Intents.all())
 @client.event
 async def on_ready():
     # commit = subprocess.check_output(['git', '-C', 'discord/bots/Haushaltsbot', 'rev-parse', '--short', 'HEAD'])
-
+    client.tree.sync()
     await client.change_presence(activity=discord.Game("Testen"), status=discord.Status.online)
     print("guild", guild_id)
     print("channel", debug_channel_id)

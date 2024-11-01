@@ -7,7 +7,7 @@
 - delete events
 '''
 
+import objects.event
 import string_sanitizer
-import event
 import kalender
 
