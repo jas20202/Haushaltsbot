@@ -1,0 +1,49 @@
+:bulb: **Hier ein paar Tipps für den Umgang mit mir :duck:**
+\n
+\n
+*Datumseingabe allgemein:* 
+\n
+Daten sind im Format `dd.mm.yyyy` einzutragen. Alternativ verstehe ich auch `d.m.yy`  wobei da zu bedenken ist, dass ich davon ausgehe, dass wir und im 21. Jhd. befinden :sweat_smile: 
+\n
+--> Alternativ dürft ihr auch gerne `heute` bzw. `morgen` als Datum eintragen um Denkzeit zu sparen  uwu
+\n
+--> Wochentage sind keine Daten, sry qwq
+\n
+\n
+*Multiple_events:*
+\n 
+Hier musst du bei Eventnamen und Eventinformationen die einzelnen Events mit einem `;` trennen. Beachte, dass die Anzahl der `;` in beider Feldern gleich sein muss (mit mind einem Leerzeichen dazwischen).
+\n
+\n
+*Eventserie:* 
+\n
+Hier bitte bei `abstand` eine Zahl direkt gefolgt (ohne Leerzeichen) von einem dieser Buchstaben: `d`, `w`, `m` oder `y`. Diese stehen für Tage, Wochen, Monate bzw. Jahre.
+\n
+\n
+*Repeated_events:*
+\n 
+Hier bitte die Daten mittels Leerzeichen trennen.
+\n
+\n
+*Delete_events:*
+\n 
+Hier kannst du eine, mehrere oder eine Spanne an IDs angeben in der Form `x`, `x y z`(mit Leerzeichen) oder `x-z`(ohne Leerzeichen) ^^
+\n
+\n
+Mit `/help_task` und dann den jeweiligen Tasknamen: `Küche`, `Bad`, `WCs`, `Boden`, `Müll`, `Großputzt` bekommst du Informationen zu den jeweiligen Task. Du musst hier auch nicht auf die Großschreibung achten ^^
+\n
+---------------------
+\n
+\n
+*Beispielseingaben:*
+\n
+`/single_event datum:01.01.23 eventname:Neu Jahr eventinfo:Ganz laut`
+\n
+\n
+`/multiple_events datum:19.02.23 eventnames:WG-Besprechung; Shisha Abend eventinfos:Mittags; Anna, Emi, Kim`
+\n
+\n`
+/repeated_events eventname:altpapier eventinfo:altpapier rechtzeitig raus dates:16.3.23 13.4.23 4.5.23`
+\n
+\n
+`/eventserie datum:03.02.23 eventname:Film-Friday eventinfo:Dino Nuggets abstand:7d anz_wdh:10`\n\n
